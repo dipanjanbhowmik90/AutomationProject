@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.testng.annotations.Test;
 
@@ -37,5 +38,20 @@ public class TEST {
 		while ((st = br.readLine()) != null)
 			System.out.println(st);
 		System.out.println("*******************");
+	}
+
+	@Test(groups = { "file" })
+	public void fileExtension() throws IOException {
+		File[] files = new File(".").listFiles();
+
+		for (File file : files) {
+		    if (file.isFile()) {
+		    	System.out.println("************************");
+		        String filePath = file.getCanonicalPath();
+		        System.out.println(filePath);
+		        System.out.println(filePath.substring(filePath.lastIndexOf(".")+1));
+		    }
+		}
+		
 	}
 }
