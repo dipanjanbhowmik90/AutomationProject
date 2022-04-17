@@ -74,10 +74,10 @@ jobs:
     
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: ./src/main/resources/result1.txt
+        working-directory: dipanjan.txt
       - uses: montudor/action-zip@v1
         with:
-          args: unzip -qq ./src/main/resources/result1.zip -d ./src/main/resources/result1 
+          args: unzip -qq dipanjan.zip -d ./src/main/resources/dipanjan 
       - name: Test in Windows
         id: run-test-complete
         run: |
