@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set ENV=branch-name
+      - name: Set ENV=QA
         id: extract-branch
         shell: bash
-        run: echo "##[set-env name=ENV;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo "$(echo ${GITHUB_REF#refs/heads/})"
       - name: Set up JDK 14
         id: setup-jdk
         uses: actions/setup-java@v1
@@ -45,7 +45,7 @@ jobs:
     needs: [ChromeJoinDepo]
     steps:
       - uses: actions/checkout@v2
-      - name: Set ENV=branch-name
+      - name: Set ENV=QA
         id: extract-branch
         shell: bash
         run: echo "##$(echo ${GITHUB_REF#refs/heads/})"
