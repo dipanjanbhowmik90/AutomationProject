@@ -70,7 +70,10 @@ jobs:
         with:
           name: dipanjan
           path: dipanjan.txt
-    
+      - name: Test in Linux
+        shell: bash
+        run: |
+          mvn test -Dgroups=file -Dsurefire.suiteXmlFiles=testng.xml
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: dipanjan.txt
