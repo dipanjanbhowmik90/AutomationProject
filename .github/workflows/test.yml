@@ -1,87 +1,67 @@
-name: Container1 Atrifact
-on:
-  
-  workflow_dispatch:
-    
+package com.cognizant.test;
 
-jobs:
-  ChromeJoinDepo:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set ENV=QA
-        id: extract-branch
-        shell: bash
-        run: echo "$(echo ${GITHUB_REF#refs/heads/})"
-      - name: Set up JDK 14
-        id: setup-jdk
-        uses: actions/setup-java@v1
-        with:
-          java-version: 14
-      - name: Cache
-        id: maven-cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Maven Install
-        if: steps.maven-cache.outputs.cache-hit != 'true'
-        id: maven-install
-        run: mvn clean install -DskipTests
-      - name: Test in Linux
-        id: report1
-        shell: bash
-        run: |
-          mvn test -Dgroups=write -Dsurefire.suiteXmlFiles=testng.xml
-      - uses: actions/upload-artifact@v3
-        with:
-          name: dipanjan
-          path: dipanjan.txt
-          
-  
-  TriggerEmail:
-    runs-on: ubuntu-latest
-    needs: [ChromeJoinDepo]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set ENV=QA
-        id: extract-branch
-        shell: bash
-        run: echo "##$(echo ${GITHUB_REF#refs/heads/})"
-      - name: Set up JDK 14
-        id: setup-jdk
-        uses: actions/setup-java@v1
-        with:
-          java-version: 14
-      - name: Cache
-        id: maven-cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Maven Install
-        if: steps.maven-cache.outputs.cache-hit != 'true'
-        id: maven-install
-        run: mvn install -DskipTests
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v3
-        with:
-          name: dipanjan
-          path: dipanjan.txt
-      - name: Test in Linux
-        shell: bash
-        run: |
-          mvn test -Dgroups=file -Dsurefire.suiteXmlFiles=testng.xml
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: dipanjan.txt
-      - uses: montudor/action-zip@v1
-        with:
-          args: unzip -qq dipanjan.zip -d dipanjan
-      - name: Test in Linux
-        id: report1
-        shell: bash
-        run: |
-          mvn test -Dgroups=read -Dsurefire.suiteXmlFiles=testng.xml
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import org.testng.annotations.Test;
+
+public class TEST {
+
+	/*
+	 * public static void main(String[] args) { CommonActions commonActions = new
+	 * CommonActions(); commonActions.createWebDriver();
+	 * commonActions.openWebSite("https://demoqa.com/"); WebDriver driver =
+	 * commonActions.getWebDriver(); HomePage homePage = new
+	 * HomePage(driver,commonActions); //homePage.clickForm(); }
+	 */
+
+	@Test(groups = { "write" })
+	public void writeFileTest() {
+		try {
+			FileWriter fw = new FileWriter("dipanjan.txt");
+			fw.write("Test Data");
+			fw.close();
+			File[] files = new File(".").listFiles();
+
+			for (File file : files) {
+			    if (file.isFile()) {
+			    	System.out.println("************************");
+			        String filePath = file.getCanonicalPath();
+			        System.out.println(filePath);
+			        System.out.println(filePath.substring(filePath.lastIndexOf(".")+1));
+			    }
+			}
+		} catch (Exception e) {
+		}
+	}
+
+	@Test(groups = { "read" })
+	public void readFileTest() throws IOException {
+		File file = new File("dipanjan.txt");
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String st;
+		System.out.println("*******************");
+		while ((st = br.readLine()) != null)
+			System.out.println(st);
+		System.out.println("*******************");
+	}
+
+	@Test(groups = { "file" })
+	public void fileExtension() throws IOException {
+		File[] files = new File(".").listFiles();
+
+		for (File file : files) {
+		    if (file.isFile()) {
+		    	System.out.println("************************");
+		        String filePath = file.getCanonicalPath();
+		        System.out.println(filePath);
+		        System.out.println(filePath.substring(filePath.lastIndexOf(".")+1));
+		    }
+		}
+		
+	}
+}
