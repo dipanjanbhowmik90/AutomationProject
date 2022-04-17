@@ -69,7 +69,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: dipanjan
-          path: dipanjan
+          path: .
       - name: Test in Linux
         shell: bash
         run: |
