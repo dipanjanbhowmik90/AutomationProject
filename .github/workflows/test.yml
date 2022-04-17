@@ -34,7 +34,7 @@ jobs:
         shell: bash
         run: |
           mvn test -Dgroups=write -Dsurefire.suiteXmlFiles=testng.xml
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         with:
           name: dipanjan
           path: dipanjan.txt
@@ -66,10 +66,17 @@ jobs:
         id: maven-install
         run: mvn install -DskipTests
       - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v3
         with:
           name: dipanjan
-      - run: cat dipanjan.txt
+          path: dipanjan.txt
+    
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: dipanjan.txt
+      - uses: montudor/action-zip@v1
+        with:
+          args: unzip -qq dipanjan.zip -d dipanjan
       - name: Test in Linux
         id: report1
         shell: bash
