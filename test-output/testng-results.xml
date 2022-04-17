@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="455" started-at="2022-04-17T11:27:17 IST" finished-at="2022-04-17T11:27:18 IST">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="455" started-at="2022-04-17T11:27:17 IST" finished-at="2022-04-17T11:27:18 IST">
+      <class name="com.cognizant.test.TEST">
+        <test-method status="PASS" signature="runTest()[pri:0, instance:com.cognizant.test.TEST@73ee04c8]" name="runTest" duration-ms="127" started-at="2022-04-17T11:27:18 IST" finished-at="2022-04-17T11:27:18 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runTest -->
+      </class> <!-- com.cognizant.test.TEST -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
