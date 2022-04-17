@@ -70,7 +70,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: report1
-          path: ./src/main/resources/result1.txt
+          path: dipanjan.txt
     
       - name: Display structure of downloaded files
         run: ls -R
