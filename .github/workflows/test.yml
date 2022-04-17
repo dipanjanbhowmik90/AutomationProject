@@ -66,12 +66,12 @@ jobs:
         id: maven-install
         run: mvn install -DskipTests
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v1
+        with:
+          name: dipanjan
+      - run: cat dipanjan.txt
       - name: Test in Linux
         id: report1
         shell: bash
         run: |
           mvn test -Dgroups=read -Dsurefire.suiteXmlFiles=testng.xml
-      - uses: actions/download-artifact@v1
-        with:
-          name: dipanjan
-      - run: cat dipanjan.txt
