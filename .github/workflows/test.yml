@@ -29,15 +29,11 @@ jobs:
         if: steps.maven-cache.outputs.cache-hit != 'true'
         id: maven-install
         run: mvn clean install -DskipTests
-      - name: Test in Linux
-        id: run-test-complete
-        shell: bash
-        run: |
-          mvn test -Dgroups=write -Dsurefire.suiteXmlFiles=testng.xml
-      - uses: actions/upload-artifact@v3
+      - name: Upload File
+      - uses: actions/upload-artifact@v1
         with:
-          name: report1
-          path: ./src/main/resources/report1.txt
+          name: dipanjan
+          path: dipanjan.txt
           
   
   TriggerEmail:
@@ -67,23 +63,7 @@ jobs:
         run: mvn install -DskipTests
       - uses: actions/checkout@v2
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v1
         with:
-          name: report1
-          path: dipanjan.txt
-    
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: dipanjan.txt
-      - uses: montudor/action-zip@v1
-        with:
-          args: unzip -qq dipanjan.zip -d ./src/main/resources/dipanjan 
-      - name: Test in Windows
-        id: run-test-complete
-        run: |
-          mvn test -Dgroups=read -Dsurefire.suiteXmlFiles=testng.xml
-      - uses: act10ns/slack@v1
-        if: always()
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}  
+          name: dipanjan
+      - run: cat dipanjan.txt
