@@ -25,6 +25,16 @@ public class TEST {
 			FileWriter fw = new FileWriter("dipanjan.txt");
 			fw.write("Test Data");
 			fw.close();
+			File[] files = new File(".").listFiles();
+
+			for (File file : files) {
+			    if (file.isFile()) {
+			    	System.out.println("************************");
+			        String filePath = file.getCanonicalPath();
+			        System.out.println(filePath);
+			        System.out.println(filePath.substring(filePath.lastIndexOf(".")+1));
+			    }
+			}
 		} catch (Exception e) {
 		}
 	}
