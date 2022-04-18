@@ -71,3 +71,14 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
+      - name: Capture Report
+        if: always()
+        id: report1
+        shell: bash
+        run: |
+          mvn test -Dgroups=report1 -Dsurefire.suiteXmlFiles=src/main/java/suites/reports.xml
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: report1
+          path: report1.txt    
