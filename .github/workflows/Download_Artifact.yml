@@ -41,12 +41,7 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
-      - name: Trigger Email with Reports
-        if: always()
-        continue-on-error: true
-        id: run-test-complete
-        run: |
-          mvn test -Dgroups=Complete -DsuiteXmlFiles="src/main/java/suites/emailTrigger.xml"
+      
       - uses: act10ns/slack@v1
         if: always()
         with:
