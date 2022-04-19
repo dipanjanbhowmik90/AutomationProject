@@ -1,0 +1,37 @@
+name: Testing
+on:
+  # schedule:
+  # - cron: "0 21 * * 1"
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Choose the environment
+        required: false
+        default: "QA"
+        options: 
+        - "QA"
+        - "UAT"
+  workflow_call:
+    inputs:
+      environment:
+        description: QA or UAT
+        required: true
+        type: string	
+  
+jobs:
+  ChromeFlakyTest:
+    runs-on: ubuntu-latest
+    env:
+      HEADLESS: true
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      SESSION: REGRESSION
+      ENV: ${{ github.event.inputs.environment }}
+      RUN_NUMBER: ${{github.run_number}+100}
+      
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set ENV=branch-name
+        id: extract-branch
+        shell: bash
+        run: echo $RUN_NUMBER
