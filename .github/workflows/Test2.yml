@@ -79,7 +79,7 @@ jobs:
         id: report3
         shell: bash
         run: |
-          mvn test -Dgroups=report1 -Dsurefire.suiteXmlFiles=reports.xml
+          mvn test -Dgroups=report3 -Dsurefire.suiteXmlFiles=reports.xml
       - uses: actions/upload-artifact@v3
         if: always()
         with:
