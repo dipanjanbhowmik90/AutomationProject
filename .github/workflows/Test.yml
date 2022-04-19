@@ -29,7 +29,7 @@ jobs:
       ENV: ${{ github.event.inputs.environment }}
       RUN_NUMBER: (${{github.run_number}}.00)
       INPUT_GITHUB_RUN_NUM: $RUN_NUMBER
-      GITHUB_RUN_NUM: $RUN_NUMBER
+      GITHUB_RUN_NUM: "100"
     steps:
       - uses: actions/checkout@v2
       - name: Set ENV=branch-name
