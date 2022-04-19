@@ -27,7 +27,7 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       SESSION: REGRESSION
       ENV: ${{ github.event.inputs.environment }}
-      RUN_NUMBER: ${{github.run_number}+100}
+      RUN_NUMBER: ${{github.run_number}}+100
       
     steps:
       - uses: actions/checkout@v2
