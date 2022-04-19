@@ -26,7 +26,10 @@ jobs:
       HEADLESS: true
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       SESSION: REGRESSION
-      ENV: ${{ github.event.inputs.environment }} 
+      ENV: ${{ github.event.inputs.environment }}
+      RUN_NUMBER: (${{github.run_number}}.00)
+      INPUT_GITHUB_RUN_NUM: $RUN_NUMBER
+      GITHUB_RUN_NUM: $RUN_NUMBER
     steps:
       - uses: actions/checkout@v2
       - name: Set ENV=branch-name
