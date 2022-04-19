@@ -1,0 +1,87 @@
+name: Container4 Atrifact
+on:
+  # schedule:
+  # - cron: "0 21 * * 1"
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Choose the environment
+        required: false
+        default: "QA"
+        options: 
+        - "QA"
+        - "UAT"
+  workflow_call:
+    inputs:
+      environment:
+        description: QA or UAT
+        required: true
+        type: string	
+  
+jobs:
+  ChromeJoinDepo:
+    runs-on: ubuntu-latest
+    env:
+      HEADLESS: true
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      SESSION: REGRESSION
+      ENV: ${{ github.event.inputs.environment }}
+      RUN_NUMBER: 100
+      INPUT_GITHUB_RUN_NUM: 100
+      GITHUB_RUN_NUM: 100
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set ENV=branch-name
+        id: extract-branch
+        shell: bash
+        run: echo "##[set-env name=ENV;]$(echo ${GITHUB_REF#refs/heads/})"
+      - name: Set up JDK 14
+        id: setup-jdk
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+      - name: Cache
+        id: maven-cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      
+      - name: Get Allure History
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
+        with:
+         ref: gh-pages
+         path: gh-pages
+      - name: Allure Report action from marketplace
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: target/allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+          keep_reports: 20
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
+      - name: Capture Report
+        if: always()
+        id: report1
+        shell: bash
+        run: |
+          mvn test -Dgroups=report1 -Dsurefire.suiteXmlFiles=reports.xml
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: report4
+          path: report4.txt    
