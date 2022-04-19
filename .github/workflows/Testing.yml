@@ -35,6 +35,7 @@ jobs:
       - name: Set ENV=branch-name
         id: extract-branch
         shell: bash
-        run: echo $RUN_NUMBER 
+        run: |
+             echo $RUN_NUMBER 
              echo $INPUT_GITHUB_RUN_NUM 
              echo $GITHUB_RUN_NUM
