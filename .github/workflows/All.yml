@@ -1,0 +1,25 @@
+name: All Test
+on:
+  workflow_dispatch:
+  
+
+jobs:
+  chrome1:
+    uses:  dipanjanbhowmik90/AutomationProject/.github/workflows/Test.yml @main
+    with:
+      environment: ${{ github.event.client_payload.environment }}
+  chrome2:
+    uses: dipanjanbhowmik90/AutomationProject/.github/workflows/Test1.yml @main
+    #needs: [smoke-mozilla]
+    with:
+      environment: ${{ github.event.client_payload.environment }}
+  chrome3:
+    uses: dipanjanbhowmik90/AutomationProject/.github/workflows/Test2.yml @main
+    #needs: [smoke-chrome, smoke-mozilla]
+    with:
+      environment: ${{ github.event.client_payload.environment }}
+  chrome4:
+    uses: dipanjanbhowmik90/AutomationProject/.github/workflows/Test3.yml @main
+    #needs: [smoke-chrome, smoke-mozilla, smoke-edge]
+    with:
+      environment: ${{ github.event.client_payload.environment }}
