@@ -31,6 +31,8 @@ jobs:
       INPUT_GITHUB_RUN_NUM: 100
       GITHUB_RUN_NUM: 100
     steps:
+      - run: |
+          docker ps
       - uses: actions/checkout@v2
       - name: Set ENV=branch-name
         id: extract-branch
